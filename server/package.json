@@ -1,0 +1,26 @@
+{
+  "name": "tutorsapi",
+  "version": "1.0.0",
+  "description": "an API to handle data from a Public Library",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Your name here",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1",
+    "mongodb": "^3.6.4",
+    "nyc": "^15.1.0",
+    "request": "^2.88.2",
+    "validatorjs": "^3.22.1"
+  },
+  "devDependencies": {
+    "istanbul": "^0.4.5",
+    "mocha": "^8.3.0"
+  },
+  "directories": {
+    "test": "test"
+  }
+}
