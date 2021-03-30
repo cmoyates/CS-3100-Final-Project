@@ -9,7 +9,12 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {Grid, Paper} from '@material-ui/core';
-
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import WeekCalendar from 'react-week-calendar';
+import 'react-week-calendar/dist/style.css';
+import ComponentSwitch from '../components/ComponentSwitch';
+import {useState} from 'react'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -41,11 +46,12 @@ const Tutor = (props) => {
 
     const classes = useStyles();
 
+    const [monthView, setMonthView] = useState(false);
 
     return (
-        <div className={classes.root} style={{height: "100vh"}}>
-        <AppBar position="static">
-        <Toolbar>
+        <div className={classes.root}>
+        <AppBar position="static" style={{height: "7vh", background:'#6479E9', display: "flex"}}>
+        <Toolbar style={{height: "7vh"}}>
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
             </IconButton>
@@ -60,18 +66,14 @@ const Tutor = (props) => {
             />
         </Toolbar>
         </AppBar>
-        <Grid container spacing={0} alignItems="stretch" style={{height: "100vh"}}>
+        <Grid container spacing={0} alignItems="stretch" style={{height: "93vh"}}>
             <Grid className="Info" item xs={4} style={{backgroundColor: "gainsboro"}}>
-<<<<<<< HEAD
               <p style={{fontSize: 30, fontWeight: 600}}>{props.name}</p>
               <img src={props.profileImg} alt="Profile Picture"/>
-              <p>{props.tutorees[1].firstName}</p>
-=======
-            <p style={{fontSize: 30, fontWeight: 600}}>{props.name}</p>
-            <img src={props.profileImg} alt="Profile Picture"/>
->>>>>>> 57f0119f2ae903c57b1cc7efb254462cdea3e45b
             </Grid>
             <Grid item xs={8} style={{backgroundColor: "white"}}>
+              <ComponentSwitch monthView={monthView}/>
+              <Button onClick = {() => {setMonthView(!monthView)}}>Month View</Button>
             </Grid>
         </Grid>
             
