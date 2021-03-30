@@ -43,7 +43,7 @@ const Tutor = (props) => {
 
 
     return (
-        <div className={classes.root} style={{height: "100%"}}>
+        <div className={classes.root} style={{height: "100vh"}}>
         <AppBar position="static">
         <Toolbar>
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
@@ -60,11 +60,10 @@ const Tutor = (props) => {
             />
         </Toolbar>
         </AppBar>
-        <Grid container spacing={0} alignItems="stretch" style={{height: "1000px"}}>
+        <Grid container spacing={0} alignItems="stretch" style={{height: "100vh"}}>
             <Grid className="Info" item xs={4} style={{backgroundColor: "gainsboro"}}>
             <p style={{fontSize: 30, fontWeight: 600}}>{props.name}</p>
             <img src={props.profileImg} alt="Profile Picture"/>
-            <p>{props.tutorees[1].firstName}</p>
             </Grid>
             <Grid item xs={8} style={{backgroundColor: "white"}}>
             </Grid>
