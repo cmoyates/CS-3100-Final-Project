@@ -23,12 +23,22 @@ function App() {
   }, [])
 
   const fetchStuff = async () => {
-    const res = await fetch('/tutorees', {
+    const tutor = {id: 1,
+          firstName: "Cristopher",
+          lastName: "Yates",
+          email: 'cmoyates@gmail.com',
+          description:        'Pretty bad at tutoring tbh',
+          phoneNumber:        '1234567890',
+          availabilities:     [true, false],
+          subjects:           ["compsci"],
+          feedback:           2.5}
+    const res = await fetch('/tutors', {
+      method: 'POST',
       headers : { 
         'Content-Type': 'application/json',
         'Accept': 'application/json'
-       }
-
+       },
+       body: JSON.stringify(tutor)
     });
     const data = await res.json();
     return data;

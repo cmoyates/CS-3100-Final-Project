@@ -62,9 +62,9 @@ const Tutor = (props) => {
         </AppBar>
         <Grid container spacing={0} alignItems="stretch" style={{height: "1000px"}}>
             <Grid className="Info" item xs={4} style={{backgroundColor: "gainsboro"}}>
-            <p style={{fontSize: 30, fontWeight: 600}}>{props.name}</p>
-            <img src={props.profileImg} alt="Profile Picture"/>
-            <p>{props.tutorees[1].firstName}</p>
+              <p style={{fontSize: 30, fontWeight: 600}}>{props.name}</p>
+              <img src={props.profileImg} alt="Profile Picture"/>
+              <p>{props.tutorees[1].firstName}</p>
             </Grid>
             <Grid item xs={8} style={{backgroundColor: "white"}}>
             </Grid>
