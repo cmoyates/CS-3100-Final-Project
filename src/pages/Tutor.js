@@ -72,8 +72,7 @@ const Tutor = (props) => {
               <img src={props.profileImg} alt="Profile Picture"/>
             </Grid>
             <Grid item xs={8} style={{backgroundColor: "white"}}>
-              <ComponentSwitch monthView={monthView}/>
-              <Button onClick = {() => {setMonthView(!monthView)}}>Month View</Button>
+              <ComponentSwitch monthView={monthView} setMonthView={setMonthView}/>
             </Grid>
         </Grid>
             
