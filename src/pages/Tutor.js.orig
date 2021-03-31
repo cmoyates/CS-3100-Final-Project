@@ -5,12 +5,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import {Grid} from '@material-ui/core';
-import Rating from '@material-ui/lab/Rating';
-import Popup from '../components/Popup';
-import {useState, useEffect} from 'react';
+import {Grid, Paper} from '@material-ui/core';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,8 +41,6 @@ const Tutor = (props) => {
 
     const classes = useStyles();
 
-    
-    const [rating, setRating] = useState(props.tutor.feedback)
 
     return (
         <div className={classes.root} style={{height: "100vh"}}>
@@ -66,20 +62,14 @@ const Tutor = (props) => {
         </AppBar>
         <Grid container spacing={0} alignItems="stretch" style={{height: "100vh"}}>
             <Grid className="Info" item xs={4} style={{backgroundColor: "gainsboro"}}>
+<<<<<<< HEAD
+              <p style={{fontSize: 30, fontWeight: 600}}>{props.name}</p>
+              <img src={props.profileImg} alt="Profile Picture"/>
+              <p>{props.tutorees[1].firstName}</p>
+=======
             <p style={{fontSize: 30, fontWeight: 600}}>{props.name}</p>
             <img src={props.profileImg} alt="Profile Picture"/>
-            <p>{}</p>
-            <h3>Rating</h3>
-            <Rating name="read-only" value={rating} precision={0.5} size="large" readOnly/>
-            <div>{rating}/5</div>
-            <h3>Subjects</h3>
-            {props.subjects.map((item, index) => (
-              <p key={index}>{item}</p>
-            ))}
-            <button onClick={() => {props.setButtonPopup(true)}}>Open Popup</button>
-            <Popup trigger={props.buttonPopup} setButtonPopup={props.setButtonPopup}>
-              <h3>Tutors</h3>
-            </Popup>
+>>>>>>> 57f0119f2ae903c57b1cc7efb254462cdea3e45b
             </Grid>
             <Grid item xs={8} style={{backgroundColor: "white"}}>
             </Grid>

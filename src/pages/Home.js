@@ -7,9 +7,15 @@ const Home = (props) => {
         console.log(response);
         props.setName(response.profileObj.name)
         props.setProfileImg(response.profileObj.imageUrl)
-        auth.login(() => {
+        const emailPromise = new Promise((resolve, reject) => {
+            props.setEmail(response.profileObj.email)
+        }).then(
+            auth.login(() => {
             props.history.push("/tutor");
         })
+        )
+        
+        
     }
 
     const responseGoogleFailure = (response) => {

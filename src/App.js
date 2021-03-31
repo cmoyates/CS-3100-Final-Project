@@ -9,36 +9,29 @@ import {useState, useEffect} from 'react'
 function App() {
 
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [profileImg, setProfileImg] = useState("");
-  const [tutorees, setTutorees] = useState([]);
+  const [buttonPopup, setButtonPopup] = useState(false);
+  const [tutor, setTutor] = useState([]);
+  const [subjects, setSubjects] = useState([]);
 
   useEffect(() => {
     const getStuff = async () => {
       const stuffFromServer = await fetchStuff();
       console.log(stuffFromServer)
-      setTutorees(stuffFromServer);
+      setTutor(stuffFromServer);
+      setSubjects(stuffFromServer.subjects);
     }
-
+    
     getStuff();
-  }, [])
+  }, [email])
 
   const fetchStuff = async () => {
-    const tutor = {id: 1,
-          firstName: "Cristopher",
-          lastName: "Yates",
-          email: 'cmoyates@gmail.com',
-          description:        'Pretty bad at tutoring tbh',
-          phoneNumber:        '1234567890',
-          availabilities:     [true, false],
-          subjects:           ["compsci"],
-          feedback:           2.5}
-    const res = await fetch('/tutors', {
-      method: 'POST',
+    const res = await fetch('/tutors/email/' + email, {
       headers : { 
         'Content-Type': 'application/json',
         'Accept': 'application/json'
-       },
-       body: JSON.stringify(tutor)
+        },
     });
     const data = await res.json();
     return data;
@@ -48,9 +41,9 @@ function App() {
     <Router>
       <div className="App" style={{height: "100%"}}>
         <Switch>
-          <ProtectedRoute path="/tutor" component={(props) => <Tutor {...props} name={name} profileImg={profileImg} tutorees={tutorees}/>}/>
+          <ProtectedRoute path="/tutor" component={(props) => <Tutor {...props} name={name} profileImg={profileImg} buttonPopup={buttonPopup} email={email} setButtonPopup={setButtonPopup} tutor={tutor} subjects={subjects}/>}/>
           <Route path="/about" component={About}/>
-          <Route exact path="/" component={(props) => <Home {...props} setName={setName} setProfileImg={setProfileImg}/>}/>
+          <Route exact path="/" component={(props) => <Home {...props} setName={setName} setProfileImg={setProfileImg} setEmail={setEmail}/>}/>
           <Route path="*" component={() => "404 No."}/>
         </Switch>
       </div>
