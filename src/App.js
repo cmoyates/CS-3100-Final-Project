@@ -8,7 +8,8 @@ import SignUp from './pages/SignUp';
 import MockData from "./pages/MockData";
 import Tutor from "./pages/Tutor";
 import ProtectedRoute from "./components/protected.route";
-import {useState, useEffect} from 'react'
+import {useState, useEffect} from 'react';
+import Availability from './Availability';
 //import { PostAdd } from '@material-ui/icons';
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
           setSessions(tutorSessionsFromServer);
           setSubjects(tutorFromServer.subjects);
           setAvailabilities(tutorFromServer.availabilities);
+          Availability.setAvailabilities(tutorFromServer.availabilities);
           console.log(tutorFromServer);
           setAccountType(1);
           return;

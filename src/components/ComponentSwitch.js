@@ -7,14 +7,18 @@ import '../pages/WeekCalendar.css';
 import Tutor from '../pages/Tutor'
 import Button from '@material-ui/core/Button';
 import {useState} from 'react'
+import WeekCell from './WeekCell'
 
 function ComponentSwitch(props) {
 
-    const [startDay, setStartDay] = useState(moment());
+    //determine availability of a given weekcell
+    let cells = document.getElementsByClassName('calendarBody__cell');
 
     let today = moment();
-    let start = parseInt(today.day().toString());
-    today.subtract(start-1, "days");
+    let weekStart = parseInt(today.day().toString());
+    today.subtract(weekStart-1, "days");
+
+    const [startDay, setStartDay] = useState(today);
 
     return (props.monthView) ? ( 
         <Calendar onClickDay = {
@@ -31,12 +35,13 @@ function ComponentSwitch(props) {
         />) :
         <div>
             <WeekCalendar
-            firstDay = {today}
+            firstDay = {startDay}
             startTime = { moment({ h: 8, m: 0 }) }
             endTime = { moment({ h: 17, m: 30 }) }
             scaleUnit = { 30 }
             cellHeight = {50}
             dayFormat = {'ddd, DD'}
+            dayCellComponent = {WeekCell}
             />
             <Button onClick = {() => {props.setMonthView(!props.monthView)}}>Month View</Button>
         </div>

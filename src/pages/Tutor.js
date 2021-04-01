@@ -47,9 +47,6 @@ const Tutor = (props) => {
     const [rating, setRating] = useState(props.tutor.feedback)
     const [monthView, setMonthView] = useState(false);
 
-    console.log(props.availabilities);
-    console.log(props.sessions);
-
     return (
         <div className={classes.root}>
         <AppBar position="static" style={{height: "7vh", background:'#6479E9', display: "flex"}}>
@@ -86,7 +83,7 @@ const Tutor = (props) => {
             </Popup>
             </Grid>
             <Grid item xs={8} style={{backgroundColor: "white"}}>
-              <ComponentSwitch monthView={monthView} setMonthView={setMonthView}/>
+              <ComponentSwitch monthView={monthView} setMonthView={setMonthView} availabilities={props.availabilities}/>
             </Grid>
         </Grid>
             
