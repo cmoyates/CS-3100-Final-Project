@@ -69,7 +69,8 @@ const Tutor = (props) => {
             <Grid className="Info" item xs={4} style={{backgroundColor: "gainsboro"}}>
             <p style={{fontSize: 30, fontWeight: 600}}>{props.name}</p>
             <img src={props.profileImg} alt=""/>
-            <p>{}</p>
+            <h3>Description</h3>
+            <p>{props.tutor.description}</p>
             <h3>Rating</h3>
             <Rating name="read-only" value={rating} precision={0.5} size="large" readOnly/>
             <div>{rating}/5</div>
