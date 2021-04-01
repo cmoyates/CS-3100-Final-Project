@@ -106,11 +106,13 @@ function App() {
     return data;
   }
 
+
+
   return (
     <Router>
       <div className="App" style={{height: "100%"}}>
         <Switch>
-          <ProtectedRoute path="/tutor" isAuth={isAuth} component={(props) => <Tutor {...props} name={name} profileImg={profileImg} buttonPopup={buttonPopup} email={email} setButtonPopup={setButtonPopup} tutor={tutor} subjects={subjects} sessions={sessions} availabilities={availabilities} setIsAuth={setIsAuth}/>}/>
+          <ProtectedRoute path="/tutor" isAuth={isAuth} component={(props) => <Tutor {...props} name={name} profileImg={profileImg} buttonPopup={buttonPopup} email={email} setButtonPopup={setButtonPopup} tutor={tutor} subjects={subjects} sessions={sessions} availabilities={availabilities} setAvailabilities={setAvailabilities} setIsAuth={setIsAuth}/>}/>
           <ProtectedRoute path="/tutoree" isAuth={isAuth} component={(props) => <Tutoree/>}/>
           <ProtectedRoute path="/admin" isAuth={isAuth} component={(props) => <Admin/>}/>
           <ProtectedRoute path="/signup" isAuth={isAuth} component={(props) => <SignUp/>}/>

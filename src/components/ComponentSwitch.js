@@ -8,6 +8,7 @@ import Tutor from '../pages/Tutor'
 import Button from '@material-ui/core/Button';
 import {useState} from 'react'
 import WeekCell from './WeekCell'
+import Availability from '../Availability';
 
 function ComponentSwitch(props) {
 
@@ -19,6 +20,29 @@ function ComponentSwitch(props) {
     today.subtract(weekStart-1, "days");
 
     const [startDay, setStartDay] = useState(today);
+
+    const updateAvailability = async () => {
+        const res = await fetch('/tutors/' + props.tutor.id, {
+            method: "PUT",
+            headers : { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                id: props.tutor.id,
+                firstName: props.tutor.firstName,
+                lastName: props.tutor.lastName,
+                email: props.tutor.email,
+                description: props.tutor.description,
+                phoneNumber: props.tutor.phoneNumber,
+                availabilities: Availability.getAvailabilities(),
+                subjects: props.tutor.subjects,
+                feedback: props.tutor.feedback
+            })
+        });
+        const data = await res.json();
+        return data;
+      }
 
     return (props.monthView) ? ( 
         <Calendar onClickDay = {
@@ -43,7 +67,11 @@ function ComponentSwitch(props) {
             dayFormat = {'ddd, DD'}
             dayCellComponent = {WeekCell}
             />
-            <Button onClick = {() => {props.setMonthView(!props.monthView)}}>Month View</Button>
+            <Button variant='contained' onClick = {() => {props.setMonthView(!props.monthView)}}>Month View</Button>
+            <Button variant='contained' onClick = {() => {
+                props.setAvailabilities(Availability.getAvailabilities());
+                updateAvailability();
+                }}>Save Changes</Button>
         </div>
 }
 

@@ -7,9 +7,19 @@ class Availability {
         this.availabilities = availabilities;
     }
 
+    setAvailability(x, y, avail) {
+        this.availabilities[x][y] = avail;
+        console.log(this.availabilities[x][y]);
+    }
+
+    getAvailabilities(availabilities) {
+        return this.availabilities;
+    }
+
     getAvailability(x, y) {
         return this.availabilities[x][y];
     }
+    
 }
 
 export default new Availability();

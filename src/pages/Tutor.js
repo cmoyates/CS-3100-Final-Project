@@ -83,7 +83,7 @@ const Tutor = (props) => {
             </Popup>
             </Grid>
             <Grid item xs={8} style={{backgroundColor: "white"}}>
-              <ComponentSwitch monthView={monthView} setMonthView={setMonthView} availabilities={props.availabilities}/>
+              <ComponentSwitch monthView={monthView} setMonthView={setMonthView} availabilities={props.availabilities} setAvailabilities={props.setAvailabilities} tutor={props.tutor}/>
             </Grid>
         </Grid>
             
