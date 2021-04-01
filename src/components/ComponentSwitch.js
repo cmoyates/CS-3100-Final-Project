@@ -1,15 +1,20 @@
 import moment from 'moment';
 import React from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import '../pages/Calendar.css';
 import WeekCalendar from 'react-week-calendar';
-import 'react-week-calendar/dist/style.css';
+import '../pages/WeekCalendar.css';
+import Tutor from '../pages/Tutor'
 import Button from '@material-ui/core/Button';
 import {useState} from 'react'
 
 function ComponentSwitch(props) {
 
     const [startDay, setStartDay] = useState(moment());
+
+    let today = moment();
+    let start = parseInt(today.day().toString());
+    today.subtract(start-1, "days");
 
     return (props.monthView) ? ( 
         <Calendar onClickDay = {
@@ -22,10 +27,11 @@ function ComponentSwitch(props) {
                     props.setMonthView(!props.monthView);
                 }
             }
+            style={{width: "500px"}}
         />) :
         <div>
             <WeekCalendar
-            firstDay = {startDay}
+            firstDay = {today}
             startTime = { moment({ h: 8, m: 0 }) }
             endTime = { moment({ h: 17, m: 30 }) }
             scaleUnit = { 30 }

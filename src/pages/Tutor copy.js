@@ -1,3 +1,4 @@
+import auth from '../auth'
 import { GoogleLogout } from 'react-google-login';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -8,11 +9,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import {Grid} from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import Popup from '../components/Popup';
-import {useState} from 'react';
-//import Calendar from 'react-calendar';
-//import 'react-calendar/dist/Calendar.css';
-//import WeekCalendar from 'react-week-calendar';
-//import 'react-week-calendar/dist/style.css';
+import {useState, useEffect} from 'react';
+import Calendar from 'react-calendar';
+import './Calendar.css';
+import WeekCalendar from 'react-week-calendar';
+import './WeekCalendar.css';
 import ComponentSwitch from '../components/ComponentSwitch';
 
 const useStyles = makeStyles((theme) => ({
@@ -38,17 +39,16 @@ const useStyles = makeStyles((theme) => ({
 const Tutor = (props) => {
 
     const logout = () => {
-        props.setIsAuth(false);
-        props.history.push("/")
+        auth.logout(() => {
+            props.history.push("/")
+        });
     } 
 
     const classes = useStyles();
+
     
     const [rating, setRating] = useState(props.tutor.feedback)
     const [monthView, setMonthView] = useState(false);
-
-    console.log(props.availabilities);
-    console.log(props.sessions);
 
     return (
         <div className={classes.root}>
@@ -71,7 +71,7 @@ const Tutor = (props) => {
         <Grid container spacing={0} alignItems="stretch" style={{height: "93vh"}}>
             <Grid className="Info" item xs={4} style={{backgroundColor: "gainsboro"}}>
             <p style={{fontSize: 30, fontWeight: 600}}>{props.name}</p>
-            <img src={props.profileImg} alt=""/>
+            <img src={props.profileImg} alt="Profile Picture"/>
             <p>{}</p>
             <h3>Rating</h3>
             <Rating name="read-only" value={rating} precision={0.5} size="large" readOnly/>
@@ -93,5 +93,4 @@ const Tutor = (props) => {
         </div>
     )
 }
-
 export default Tutor
