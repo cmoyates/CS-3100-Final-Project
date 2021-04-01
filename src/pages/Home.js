@@ -1,21 +1,24 @@
 import { GoogleLogin } from 'react-google-login';
 import auth from "../auth"
+import {useEffect, useState} from 'react'
 
 const Home = (props) => {
 
+    useEffect(() => {
+        if (props.accountType !== -1 && props.isAuth) {
+            switch (props.accountType) {
+                case 0: props.history.push("/signup"); break;
+                case 1: props.history.push("/tutor"); break;
+                case 2: props.history.push("/tutoree"); break;
+                case 3: props.history.push("/admin"); break;
+            }
+        }
+    }, [props.accountType, props.isAuth])
+
     const responseGoogleSuccess = (response) => {
-        console.log(response);
         props.setName(response.profileObj.name)
         props.setProfileImg(response.profileObj.imageUrl)
-        const emailPromise = new Promise((resolve, reject) => {
-            props.setEmail(response.profileObj.email)
-        }).then(
-            auth.login(() => {
-            props.history.push("/tutor");
-        })
-        )
-        
-        
+        props.setEmail(response.profileObj.email)       
     }
 
     const responseGoogleFailure = (response) => {

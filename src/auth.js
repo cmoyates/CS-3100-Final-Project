@@ -3,8 +3,9 @@ class Auth {
         this.authenticated = false;
     }
 
-    login(cb) {
+    login(accountType, cb) {
         this.authenticated = true;
+        this.accountType = accountType;
         cb();
     }
 
@@ -15,6 +16,10 @@ class Auth {
 
     isAuthenticated() {
         return this.authenticated;
+    }
+
+    getAccountType() {
+        return this.accountType;
     }
 }
 
