@@ -4,7 +4,6 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import WeekCalendar from 'react-week-calendar';
 import 'react-week-calendar/dist/style.css';
-import Tutor from '../pages/Tutor'
 import Button from '@material-ui/core/Button';
 import {useState} from 'react'
 
@@ -19,7 +18,6 @@ function ComponentSwitch(props) {
                     let month = parseInt(value.getMonth().toString());
                     let day = parseInt(value.getDate().toString());
                     let start = parseInt(value.getDay().toString());
-                    console.log(start);
                     setStartDay(moment([year, month, day]).subtract(start-1, "days"));
                     props.setMonthView(!props.monthView);
                 }
@@ -32,6 +30,7 @@ function ComponentSwitch(props) {
             endTime = { moment({ h: 17, m: 30 }) }
             scaleUnit = { 30 }
             cellHeight = {50}
+            dayFormat = {'ddd, DD'}
             />
             <Button onClick = {() => {props.setMonthView(!props.monthView)}}>Month View</Button>
         </div>

@@ -9,11 +9,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import {Grid} from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import Popup from '../components/Popup';
-import {useState, useEffect} from 'react';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-import WeekCalendar from 'react-week-calendar';
-import 'react-week-calendar/dist/style.css';
+import {useState} from 'react';
+//import Calendar from 'react-calendar';
+//import 'react-calendar/dist/Calendar.css';
+//import WeekCalendar from 'react-week-calendar';
+//import 'react-week-calendar/dist/style.css';
 import ComponentSwitch from '../components/ComponentSwitch';
 
 const useStyles = makeStyles((theme) => ({
@@ -45,7 +45,6 @@ const Tutor = (props) => {
     } 
 
     const classes = useStyles();
-
     
     const [rating, setRating] = useState(props.tutor.feedback)
     const [monthView, setMonthView] = useState(false);
@@ -71,7 +70,7 @@ const Tutor = (props) => {
         <Grid container spacing={0} alignItems="stretch" style={{height: "93vh"}}>
             <Grid className="Info" item xs={4} style={{backgroundColor: "gainsboro"}}>
             <p style={{fontSize: 30, fontWeight: 600}}>{props.name}</p>
-            <img src={props.profileImg} alt="Profile Picture"/>
+            <img src={props.profileImg} alt=""/>
             <p>{}</p>
             <h3>Rating</h3>
             <Rating name="read-only" value={rating} precision={0.5} size="large" readOnly/>
