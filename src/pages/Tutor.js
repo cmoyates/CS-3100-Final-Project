@@ -39,6 +39,7 @@ const Tutor = (props) => {
 
     const logout = () => {
         props.setIsAuth(false);
+        props.setAccountType(-1);
         props.history.push("/")
     } 
 
