@@ -19,6 +19,10 @@ class Availability {
     getAvailability(x, y) {
         return this.availabilities[x][y];
     }
+
+    getAvailabilityCount() {
+        return this.availabilities.length;
+    }
     
 }
 

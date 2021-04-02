@@ -6,6 +6,7 @@ class Session {
     }
 
     setSessions(sessions) {
+        console.log('called');
         this.sessions = [];
         for(let i=0; i<sessions.length; i++) {
 

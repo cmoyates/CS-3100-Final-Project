@@ -7,13 +7,8 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {Grid} from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
-import Popup from '../components/Popup';
 import {useState} from 'react';
-//import Calendar from 'react-calendar';
-//import 'react-calendar/dist/Calendar.css';
-//import WeekCalendar from 'react-week-calendar';
-//import 'react-week-calendar/dist/style.css';
-import ComponentSwitch from '../components/ComponentSwitch';
+import TutorCalendarSwitch from '../components/TutorCalendarSwitch';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -69,7 +64,7 @@ const Tutor = (props) => {
         </AppBar>
         <Grid container spacing={0} alignItems="stretch" style={{height: "93vh"}}>
             <Grid className="Info" item xs={4} style={{backgroundColor: "gainsboro"}}>
-            <p style={{fontSize: 30, fontWeight: 600}}>{props.name}</p>
+            <p style={{fontSize: 30, fontWeight: 600}}>{props.tutor.firstName} {props.tutor.lastName}</p>
             <img src={props.profileImg} alt=""/>
             <h3>Description</h3>
             <p>{props.tutor.description}</p>
@@ -84,7 +79,7 @@ const Tutor = (props) => {
             ))}
             </Grid>
             <Grid item xs={8} style={{backgroundColor: "white"}}>
-              <ComponentSwitch monthView={monthView} setMonthView={setMonthView} availabilities={props.availabilities} setAvailabilities={props.setAvailabilities} sessions={props.sessions} tutor={props.tutor}/>
+              <TutorCalendarSwitch monthView={monthView} setMonthView={setMonthView} availabilities={props.availabilities} setAvailabilities={props.setAvailabilities} sessions={props.sessions} tutor={props.tutor}/>
             </Grid>
         </Grid>
             

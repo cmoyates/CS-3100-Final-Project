@@ -78,7 +78,7 @@ const SignupSwitch = (props) => {
             phoneNumber: phoneNumber,
             availabilities: availabilities,
             subjects: outputSubjects,
-            feedback: 0.1
+            feedback: 2.5
         })
         });
         const data = await res.json();
@@ -230,9 +230,6 @@ const SignupSwitch = (props) => {
                             onChange={selectGradeLevel}
                             label="Age"
                         >
-                        <MenuItem value="">
-                            <em>None</em>
-                        </MenuItem>
                         <MenuItem value={1}>1</MenuItem>
                         <MenuItem value={2}>2</MenuItem>
                         <MenuItem value={3}>3</MenuItem>

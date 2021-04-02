@@ -7,11 +7,12 @@ import '../pages/WeekCalendar.css';
 import Tutor from '../pages/Tutor'
 import Button from '@material-ui/core/Button';
 import {useState} from 'react'
-import WeekCell from './WeekCell'
 import Availability from '../Availability';
 import Session from '../Session';
+import TutoreeWeekCell from './TutoreeWeekCell'
+import Popup from './Popup';
 
-function ComponentSwitch(props) {
+function TutoreeCalendarSwitch(props) {
 
     //determine availability of a given weekcell
     let cells = document.getElementsByClassName('calendarBody__cell');
@@ -21,36 +22,26 @@ function ComponentSwitch(props) {
     today.subtract(weekStart-1, "days");
 
     const [startDay, setStartDay] = useState(today);
-
-    const updateAvailability = async () => {
-        const res = await fetch('/tutors/' + props.tutor.id, {
-            method: "PUT",
-            headers : { 
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                id: props.tutor.id,
-                firstName: props.tutor.firstName,
-                lastName: props.tutor.lastName,
-                email: props.tutor.email,
-                description: props.tutor.description,
-                phoneNumber: props.tutor.phoneNumber,
-                availabilities: Availability.getAvailabilities(),
-                subjects: props.tutor.subjects,
-                feedback: props.tutor.feedback
-            })
-        });
-        const data = await res.json();
-        return data;
-      }
+    const [open, setOpen] = useState(false);
+    const [selectedTutor, setSelectedTutor] = useState([]);
 
       for(let i=0; i<Session.getSessionCount(); i++){
           let currSession = Session.getSession(i);
           let isSame = currSession.monday.isSame(startDay, 'day');
           Session.setIsThisWeek(i, isSame);
-          console.log(isSame);
       }
+
+    const handleClose = (value) => {
+        setOpen(false);
+        if(value != undefined) {
+            displayTutorInfo(value);
+        }
+    };
+
+    const displayTutorInfo = (tutor) => {
+        Availability.setAvailabilities(tutor.availabilities);
+        setSelectedTutor(tutor);
+    }
 
     return (props.monthView) ? ( 
         <Calendar onClickDay = {
@@ -73,14 +64,12 @@ function ComponentSwitch(props) {
             scaleUnit = { 30 }
             cellHeight = {50}
             dayFormat = {'ddd, DD'}
-            dayCellComponent = {WeekCell}
+            dayCellComponent = {TutoreeWeekCell}
             />
             <Button variant='contained' onClick = {() => {props.setMonthView(!props.monthView)}}>Month View</Button>
-            <Button variant='contained' onClick = {() => {
-                props.setAvailabilities(Availability.getAvailabilities());
-                updateAvailability();
-                }}>Save Changes</Button>
+            <Button variant='contained' onClick = {() => {setOpen(true)}}>Book a session</Button>
+            <Popup open={open} onClose={handleClose} setSelectedTutor={setSelectedTutor} allTutors={props.allTutors} setSelectedTutor={setSelectedTutor} />
         </div>
 }
 
-export default ComponentSwitch;
+export default TutoreeCalendarSwitch;

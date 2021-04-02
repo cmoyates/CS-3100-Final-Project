@@ -5,8 +5,6 @@ const MockData = () => {
     useEffect(() => {
     const getStuff = async () => {
 
-        const tutorFromServer = await addTutor();
-        console.log(tutorFromServer);
         const sessionAdded = await addSession();
         console.log(sessionAdded);
       
@@ -48,11 +46,11 @@ const MockData = () => {
         },
         body: JSON.stringify({
             id: 7,
-            tutorId: 2,
-            tutoreeId: 7,
+            tutorId: 1151111089711011700,
+            tutoreeId: 1061041171001151100,
             location: "MUN Library",
             time: "13:00",
-            date: "2021-4-4",
+            date: "2021-4-3",
         })
     });
     const data = await res.json();

@@ -4,7 +4,7 @@ import {useState} from 'react';
 import Availability from '../Availability';
 import Session from '../Session';
 
-const WeekCell = (props) => {
+const TutorWeekCell = (props) => {
 
     let isSessionBooked = false;
     let currSession;
@@ -45,4 +45,4 @@ const updateAvailabilities = (avail, colPos, rowPos) => {
     Availability.setAvailability(colPos, rowPos, !avail);
 }
 
-export default WeekCell
+export default TutorWeekCell
