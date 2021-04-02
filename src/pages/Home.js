@@ -33,7 +33,7 @@ const Home = (props) => {
                 onSuccess={responseGoogleSuccess}
                 onFailure={responseGoogleFailure}
                 cookiePolicy={'single_host_origin'}
-                isSignedIn={false}
+                isSignedIn={true}
             />
         </div>
     )
