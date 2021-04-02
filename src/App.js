@@ -32,13 +32,14 @@ function App() {
         setIsAuth(true);
         try {
           const tutorFromServer = await fetchTutor();
+          console.log(tutorFromServer);
           setTutor(tutorFromServer);
           const tutorSessionsFromServer = await fetchTutorSessions(tutorFromServer.id);
+          console.log(tutorSessionsFromServer);
           setSessions(tutorSessionsFromServer);
           setSubjects(tutorFromServer.subjects);
           setAvailabilities(tutorFromServer.availabilities);
           Availability.setAvailabilities(tutorFromServer.availabilities);
-          Session.setSessions(tutorSessionsFromServer);
           console.log(tutorFromServer);
           setAccountType(1);
           return;
@@ -112,10 +113,10 @@ function App() {
     <Router>
       <div className="App" style={{height: "100%"}}>
         <Switch>
-          <ProtectedRoute path="/tutor" isAuth={isAuth} component={(props) => <Tutor {...props} name={name} profileImg={profileImg} buttonPopup={buttonPopup} email={email} setButtonPopup={setButtonPopup} tutor={tutor} subjects={subjects} sessions={sessions} availabilities={availabilities} setAvailabilities={setAvailabilities} setIsAuth={setIsAuth} setAccountType={setAccountType}/>}/>
+          <ProtectedRoute path="/tutor" isAuth={isAuth} component={(props) => <Tutor {...props} name={name} profileImg={profileImg} buttonPopup={buttonPopup} email={email} setButtonPopup={setButtonPopup} tutor={tutor} subjects={subjects} sessions={sessions} availabilities={availabilities} setAvailabilities={setAvailabilities} setIsAuth={setIsAuth} setAccountType={setAccountType} setEmail={setEmail}/>}/>
           <ProtectedRoute path="/tutoree" isAuth={isAuth} component={(props) => <Tutoree/>}/>
           <ProtectedRoute path="/admin" isAuth={isAuth} component={(props) => <Admin/>}/>
-          <ProtectedRoute path="/signup" isAuth={isAuth} component={(props) => <SignUp/>}/>
+          <ProtectedRoute path="/signup" isAuth={isAuth} component={(props) => <SignUp {...props} email={email} setEmail={setEmail} setIsAuth={setIsAuth} setAccountType={setAccountType}/>}/>
           <Route path="/about" component={MockData}/>
           <Route exact path="/" component={(props) => <Home {...props} setName={setName} setProfileImg={setProfileImg} setEmail={setEmail} accountType={accountType} isAuth={isAuth}/>}/>
           <Route path="*" component={() => "404 No."}/>

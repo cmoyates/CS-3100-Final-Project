@@ -972,10 +972,10 @@ describe('Testing the Tutoring API', async function(){
             await new Session(120, 52, 83, "Coffe Shop", "09:30", "Dec 8 2022").save(db)
             // Get all of the sessions in the database
             let allSessionsWithTutor = await Session.getSessionsByTutor(db, 52);
-            // Check if the number of sessions you just got was less than 1 (if so, fail the test)
-            if (allSessionsWithTutor.length < 1) 
+            // Check if array of sessions is returned (if not, fail the test)
+            if (!Array.isArray(allSessionsWithTutor)) 
             {
-                assert.fail("There should be elements in the database");
+                assert.fail("This should return an array");
             }
         });
         it('Success 8 - Test the retrieval of all sessions (Session.getSessionsByTutoree) - Success Msg test', async function(){
@@ -983,10 +983,10 @@ describe('Testing the Tutoring API', async function(){
             await new Session(121, 47, 129, "Main Building", "14:00", "Aug 8 2022").save(db)
             // Get all of the sessions in the database
             let allSessionsWithTutoree = await Session.getSessionsByTutoree(db, 129);
-            // Check if the number of sessions you just got was less than 1 (if so, fail the test)
-            if (allSessionsWithTutoree.length < 1) 
+            // Check if array of sessions is returned (if not, fail the test)
+            if (!Array.isArray(allSessionsWithTutoree)) 
             {
-                assert.fail("There should be elements in the database");
+                assert.fail("This should return an array");
             }
         });
         it('Success 9 - Test the retrieval of all sessions (Session.getSessions) - Success Msg test', async function(){
@@ -1161,7 +1161,7 @@ describe('Testing the Tutoring API', async function(){
                     });
             });
         });
-        it('Success 5 - POST /sessions, GET /sessions/tutor/:tutorId (retrieval greater than 1), DELETE /sessions/:id', function(){
+        it('Success 5 - POST /sessions, GET /sessions/tutor/:tutorId (retrieval as array), DELETE /sessions/:id', function(){
             // Store the data for a session in a variable
             let session = new Session(193, 86, 213, "Library Study Room", "14:30", "Sept 5 2021");
             // Try to add the session to the database
@@ -1182,11 +1182,11 @@ describe('Testing the Tutoring API', async function(){
                             console.log();
                             console.log(body);
                             let allSessions = JSON.parse(body);
-                            // Check to see if you got more than one thing when you tried to get all of the correct sessions
-                            if (allSessions.length < 1) 
+                            // Check to see if you got an array
+                            if (!Array.isArray(allSessions)) 
                             {
                                 // If not fail the test
-                                assert.fail("There should be elements in the database");
+                                assert.fail("This should return an array");
                             }
                             // Try to delete the session that we added at first
                             request.delete({
@@ -1201,7 +1201,7 @@ describe('Testing the Tutoring API', async function(){
                     });
             });
         });
-        it('Success 6 - POST /sessions, GET /sessions/tutoree/:tutoreeId (retrieval greater than 1), DELETE /sessions/:id', function(){
+        it('Success 6 - POST /sessions, GET /sessions/tutoree/:tutoreeId (retrieval as array), DELETE /sessions/:id', function(){
             // Store the data for a session in a variable
             let session = new Session(194, 72, 81, "Starbucks", "17:00", "Sept 4 2021");
             // Try to add the session to the database
@@ -1222,11 +1222,11 @@ describe('Testing the Tutoring API', async function(){
                             console.log();
                             console.log(body);
                             let allSessions = JSON.parse(body);
-                            // Check to see if you got more than one thing when you tried to get all of the correct sessions
-                            if (allSessions.length < 1) 
+                            // Check to see if you got an array
+                            if (!Array.isArray(allSessions)) 
                             {
                                 // If not fail the test
-                                assert.fail("There should be elements in the database");
+                                assert.fail("This should return an array");
                             }
                             // Try to delete the session that we added at first
                             request.delete({

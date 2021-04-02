@@ -6,6 +6,9 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
 
 const SignupSwitch = (props) => {
 
@@ -15,6 +18,8 @@ const SignupSwitch = (props) => {
     const [lastName, setLastName] = useState("");
     const [description, setDescription] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
+    const [redirect, setRedirect] = useState(false);
+    const [gradeLevel, setGradeLevel] = useState(1);
 
     const selectSubjects = (event) => {
         let tempSelections = selectedSubjects;
@@ -26,6 +31,97 @@ const SignupSwitch = (props) => {
 
     const {compsci, english, french, history, math} = selectedSubjects;
     const error = [compsci, english, french, history, math].filter((v) => v).length < 1;
+
+    const createId = (email) => {
+        let id = "";
+        for(let i=0; i<email.length; i++) {
+            id = id.concat(email.charCodeAt(i).toString());
+        }
+        if(id.length > 20) {
+            id = id.slice(0, 19);
+        }
+        parseInt(id);
+        return id;
+    }
+
+    let idFromEmail = createId(props.email);
+
+    let outputSubjects = [];
+
+    const availabilities = 
+    [[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+    [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+    [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+    [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+    [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+    [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
+    [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]];
+
+    const selectGradeLevel = (event) => {
+        setGradeLevel(event.target.value);
+        console.log(event);
+    };
+
+    const uploadTutor = async () => {
+        const res = await fetch('/tutors/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            id: idFromEmail,
+            firstName: firstName,
+            lastName: lastName,
+            email: props.email,
+            description: description,
+            phoneNumber: phoneNumber,
+            availabilities: availabilities,
+            subjects: outputSubjects,
+            feedback: 0.1
+        })
+        });
+        const data = await res.json();
+        return data;
+      }
+
+      const uploadTutoree = async () => {
+        const res = await fetch('/tutorees/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            id: idFromEmail,
+            firstName: firstName,
+            lastName: lastName,
+            phoneNumber: phoneNumber,
+            email: props.email,
+            gradeLevel: gradeLevel
+        })
+        });
+        const data = await res.json();
+        return data;
+      }
+
+      const uploadAdmin = async () => {
+        const res = await fetch('/admins/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            id: idFromEmail,
+            firstName: firstName,
+            lastName: lastName,
+            email: props.email
+        })
+        });
+        const data = await res.json();
+        return data;
+      }
 
     switch(props.accountType) {
         case 'tutor':
@@ -86,27 +182,104 @@ const SignupSwitch = (props) => {
                         </FormGroup>
                     </FormControl>
                     <br></br>
-                    <Button onClick={() => {
-                        let outputSubjects = [];
+                    <Button variant="contained" onClick={async () => {
                         for(let i=0; i<selectedSubjects.length; i++) {
                             if(selectedSubjects[i]) {
                                 outputSubjects.push(subjectStrings[i]);
                             }
                         }
-
+                        try {
+                            const tutorUploaded = await uploadTutor();
+                        }
+                        catch(err) {
+                            props.setEmail("");
+                            props.setIsAuth(false);
+                            props.setAccountType(-1);
+                            props.history.push('/');
+                        }
                     }}>Submit</Button>
                 </div>
             )
         case 'tutoree':
             return(
                 <div>
-                    <h1>tutoree</h1>
+                    <span>
+                        <TextField style = {{margin: '10px'}} id="firstName" label="First Name" variant="outlined" value={firstName} onInput={e=>setFirstName(e.target.value)} />
+                        <TextField style = {{margin: '10px'}} id="lastName" label="Last Name" variant="outlined" value={lastName} onInput={e=>setLastName(e.target.value)} />
+                    </span>
+                    <br></br>
+                    <TextField
+                        id="phoneNumber"
+                        label="Phone Number"
+                        type="number"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        variant="outlined"
+                        value={phoneNumber}
+                        onInput={e=>setPhoneNumber(parseInt(e.target.value))}
+                    />
+                    <br></br>
+                    <FormControl variant="outlined">
+                        <InputLabel id="gradeLevel">Grade Level</InputLabel>
+                        <Select 
+                            style = {{margin: '10px'}}
+                            labelId="demo-simple-select-outlined-label"
+                            id="demo-simple-select-outlined"
+                            value={gradeLevel}
+                            onChange={selectGradeLevel}
+                            label="Age"
+                        >
+                        <MenuItem value="">
+                            <em>None</em>
+                        </MenuItem>
+                        <MenuItem value={1}>1</MenuItem>
+                        <MenuItem value={2}>2</MenuItem>
+                        <MenuItem value={3}>3</MenuItem>
+                        <MenuItem value={4}>4</MenuItem>
+                        <MenuItem value={5}>5</MenuItem>
+                        <MenuItem value={6}>6</MenuItem>
+                        <MenuItem value={7}>7</MenuItem>
+                        <MenuItem value={8}>8</MenuItem>
+                        <MenuItem value={9}>9</MenuItem>
+                        <MenuItem value={10}>10</MenuItem>
+                        <MenuItem value={11}>11</MenuItem>
+                        <MenuItem value={12}>12</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <br></br>
+                    <Button variant="contained" onClick={async () => {
+                        try {
+                            const tutoreeUploaded = await uploadTutoree();
+                        }
+                        catch(err) {
+                            props.setEmail("");
+                            props.setIsAuth(false);
+                            props.setAccountType(-1);
+                            props.history.push('/');
+                        }
+                    }}>Submit</Button>
                 </div>
             )
         case 'admin':
             return(
                 <div>
-                    <h1>admin</h1>
+                    <span>
+                        <TextField style = {{margin: '10px'}} id="firstName" label="First Name" variant="outlined" value={firstName} onInput={e=>setFirstName(e.target.value)} />
+                        <TextField style = {{margin: '10px'}} id="lastName" label="Last Name" variant="outlined" value={lastName} onInput={e=>setLastName(e.target.value)} />
+                    </span>
+                    <br></br>
+                    <Button variant="contained" onClick={async () => {
+                        try {
+                            const adminUploaded = await uploadAdmin();
+                        }
+                        catch(err) {
+                            props.setEmail("");
+                            props.setIsAuth(false);
+                            props.setAccountType(-1);
+                            props.history.push('/');
+                        }
+                    }}>Submit</Button>
                 </div>
             )
         default:

@@ -152,17 +152,9 @@ class Session {
 			// Try to get all of the sessions involving the specified tutor in the database
 			collection.find({"tutorId": tutorId_get}).toArray((err, items) => {
 				if (err) throw err;
-				// Check if more any items were found (more than 0)
-				if (items.length > 0) {
-					// If so, resolve and return everything
-					console.log(items.length + " item(s) sent");
-					resolve(items);
-				}
-				// If not, reject
-				else {
-					console.log("No sessions found involving the specified tutor");
-					reject("No sessions found involving that tutor");
-				}
+				// Return array of sessions (could be empty)
+				console.log(items.length + " item(s) sent");
+				resolve(items);
 			})
 		});
 	};
@@ -175,17 +167,9 @@ class Session {
 			// Try to get all of the sessions involving the specified tutoree in the database
 			collection.find({"tutoreeId": tutoreeId_get}).toArray((err, items) => {
 				if (err) throw err;
-				// Check if more any items were found (more than 0)
-				if (items.length > 0) {
-					// If so, resolve and return everything
-					console.log(items.length + " item(s) sent");
-					resolve(items);
-				}
-				// If not, reject
-				else {
-					console.log("No sessions found involving the specified tutoree");
-					reject("No sessions found involving that tutoree");
-				}
+				// Return array of sessions (could be empty)
+				console.log(items.length + " item(s) sent");
+				resolve(items);
 			})
 		});
 	};

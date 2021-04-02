@@ -40,7 +40,8 @@ const Tutor = (props) => {
     const logout = () => {
         props.setIsAuth(false);
         props.setAccountType(-1);
-        props.history.push("/")
+        props.setEmail("");
+        props.history.push("/");
     } 
 
     const classes = useStyles();
@@ -56,7 +57,7 @@ const Tutor = (props) => {
             <MenuIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-            Tutoring Dashboard
+            Tutor Dashboard
             </Typography>
             
             <GoogleLogout
@@ -72,6 +73,8 @@ const Tutor = (props) => {
             <img src={props.profileImg} alt=""/>
             <h3>Description</h3>
             <p>{props.tutor.description}</p>
+            <h3>Phone Number</h3>
+            <p>{props.tutor.phoneNumber}</p>
             <h3>Rating</h3>
             <Rating name="read-only" value={rating} precision={0.5} size="large" readOnly/>
             <div>{rating}/5</div>

@@ -5,10 +5,10 @@ const MockData = () => {
     useEffect(() => {
     const getStuff = async () => {
 
-        const sessionAdded = await addSession();
-        console.log(sessionAdded);
         const tutorFromServer = await addTutor();
         console.log(tutorFromServer);
+        const sessionAdded = await addSession();
+        console.log(sessionAdded);
       
       
       //setTutor(stuffFromServer);
@@ -27,7 +27,7 @@ const MockData = () => {
             id: 7,
             firstName: "Notcristopher",
             lastName: "Notyates",
-            email: "cmoyates@mun.ca",
+            email: "jhudson@mun.ca",
             description: "Idk",
             phoneNumber: 1230123123,
             availabilities: [false, false],

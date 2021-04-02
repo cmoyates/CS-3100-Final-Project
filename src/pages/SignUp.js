@@ -6,7 +6,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import SignupSwitch from '../components/SignupSwitch';
 
 
-const SignUp = () => {
+const SignUp = (props) => {
 
 const [accType, setAccType] = useState('tutor');
 
@@ -25,7 +25,7 @@ const selectAccountType = (event) => {
                     <FormControlLabel style={{justifyContent: 'center'}} value="admin" control={<Radio />} label="Admin" />
                 </span>
             </RadioGroup>
-            <SignupSwitch accountType={accType}/>
+            <SignupSwitch accountType={accType} email={props.email} history={props.history} setEmail={props.setEmail} setIsAuth={props.setIsAuth} setAccountType={props.setAccountType}/>
         </div>
     )
 }

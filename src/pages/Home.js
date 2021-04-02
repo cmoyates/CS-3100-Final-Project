@@ -17,10 +17,11 @@ const Home = (props) => {
     const responseGoogleSuccess = (response) => {
         props.setName(response.profileObj.name)
         props.setProfileImg(response.profileObj.imageUrl)
-        props.setEmail(response.profileObj.email)       
+        props.setEmail(response.profileObj.email)
     }
 
     const responseGoogleFailure = (response) => {
+        console.log('test')
         console.log(response);
     }
 
@@ -32,7 +33,7 @@ const Home = (props) => {
                 buttonText="Login"
                 onSuccess={responseGoogleSuccess}
                 onFailure={responseGoogleFailure}
-                cookiePolicy={'single_host_origin'}
+                cookiePolicy={'none'}
                 isSignedIn={true}
             />
         </div>
