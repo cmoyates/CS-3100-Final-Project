@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import {useState} from 'react'
 import WeekCell from './WeekCell'
 import Availability from '../Availability';
+import Session from '../Session';
 
 function ComponentSwitch(props) {
 
@@ -42,6 +43,13 @@ function ComponentSwitch(props) {
         });
         const data = await res.json();
         return data;
+      }
+
+      for(let i=0; i<Session.getSessionCount(); i++){
+          let currSession = Session.getSession(i);
+          let isSame = currSession.monday.isSame(startDay, 'day');
+          Session.setIsThisWeek(i, isSame);
+          console.log(isSame);
       }
 
     return (props.monthView) ? ( 

@@ -10,6 +10,7 @@ import Tutor from "./pages/Tutor";
 import ProtectedRoute from "./components/protected.route";
 import {useState, useEffect} from 'react';
 import Availability from './Availability';
+import Session from './Session';
 //import { PostAdd } from '@material-ui/icons';
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           setSubjects(tutorFromServer.subjects);
           setAvailabilities(tutorFromServer.availabilities);
           Availability.setAvailabilities(tutorFromServer.availabilities);
+          Session.setSessions(tutorSessionsFromServer);
           console.log(tutorFromServer);
           setAccountType(1);
           return;
@@ -105,8 +107,6 @@ function App() {
     const data = await res.json();
     return data;
   }
-
-
 
   return (
     <Router>

@@ -78,13 +78,9 @@ const Tutor = (props) => {
             {props.subjects.map((item, index) => (
               <p key={index}>{item}</p>
             ))}
-            <button onClick={() => {props.setButtonPopup(true)}}>Open Popup</button>
-            <Popup trigger={props.buttonPopup} setButtonPopup={props.setButtonPopup}>
-              <h3>Tutors</h3>
-            </Popup>
             </Grid>
             <Grid item xs={8} style={{backgroundColor: "white"}}>
-              <ComponentSwitch monthView={monthView} setMonthView={setMonthView} availabilities={props.availabilities} setAvailabilities={props.setAvailabilities} tutor={props.tutor}/>
+              <ComponentSwitch monthView={monthView} setMonthView={setMonthView} availabilities={props.availabilities} setAvailabilities={props.setAvailabilities} sessions={props.sessions} tutor={props.tutor}/>
             </Grid>
         </Grid>
             
