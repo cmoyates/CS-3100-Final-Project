@@ -9,6 +9,8 @@ import {Grid} from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import {useState} from 'react';
 import TutorCalendarSwitch from '../components/TutorCalendarSwitch';
+import Session from '../Session';
+import Availability from '../Availability';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -36,6 +38,8 @@ const Tutor = (props) => {
         props.setIsAuth(false);
         props.setAccountType(-1);
         props.setEmail("");
+        Availability.setAvailabilities([]);
+        Session.setSessions([]);
         props.history.push("/");
     } 
 
@@ -46,7 +50,7 @@ const Tutor = (props) => {
 
     return (
         <div className={classes.root}>
-        <AppBar position="static" style={{height: "7vh", background:'#6479E9', display: "flex"}}>
+        <AppBar position="static" style={{height: "7vh", background:'#BF5E5E', display: "flex"}}>
         <Toolbar style={{height: "7vh"}}>
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />

@@ -11,6 +11,7 @@ import Availability from '../Availability';
 import Session from '../Session';
 import TutoreeWeekCell from './TutoreeWeekCell'
 import Popup from './Popup';
+import ButtonSwitch from './ButtonSwitch';
 
 function TutoreeCalendarSwitch(props) {
 
@@ -20,10 +21,13 @@ function TutoreeCalendarSwitch(props) {
     let today = moment();
     let weekStart = parseInt(today.day().toString());
     today.subtract(weekStart-1, "days");
+    Session.monday = today;
+    Session.tutoreeId = props.tutoree.id;
 
     const [startDay, setStartDay] = useState(today);
     const [open, setOpen] = useState(false);
     const [selectedTutor, setSelectedTutor] = useState([]);
+    const [tutorSessions, setTutorSessions] = useState([]);
 
       for(let i=0; i<Session.getSessionCount(); i++){
           let currSession = Session.getSession(i);
@@ -38,10 +42,30 @@ function TutoreeCalendarSwitch(props) {
         }
     };
 
-    const displayTutorInfo = (tutor) => {
+    const displayTutorInfo = async (tutor) => {
+        const sessionsFromServer = await fetchTutorSessions(tutor.id);
+        console.log(sessionsFromServer);
+        setTutorSessions(sessionsFromServer);
+        Session.setSessions(sessionsFromServer);
+        console.log(Session.sessions);
         Availability.setAvailabilities(tutor.availabilities);
         setSelectedTutor(tutor);
+        props.setMonthView(true);
+        Session.tutorId = tutor.id;
     }
+
+    const fetchTutorSessions = async (id) => {
+        const res = await fetch('/sessions/tutor/' + id, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        });
+        const data = await res.json();
+        return data;
+      }
+
+    console.log(Session.sessions);
 
     return (props.monthView) ? ( 
         <Calendar onClickDay = {
@@ -50,7 +74,9 @@ function TutoreeCalendarSwitch(props) {
                     let month = parseInt(value.getMonth().toString());
                     let day = parseInt(value.getDate().toString());
                     let start = parseInt(value.getDay().toString());
-                    setStartDay(moment([year, month, day]).subtract(start-1, "days"));
+                    let tempStartDay = moment([year, month, day]).subtract(start-1, "days");
+                    setStartDay(tempStartDay);
+                    Session.currMonday = tempStartDay;
                     props.setMonthView(!props.monthView);
                 }
             }
@@ -66,8 +92,10 @@ function TutoreeCalendarSwitch(props) {
             dayFormat = {'ddd, DD'}
             dayCellComponent = {TutoreeWeekCell}
             />
-            <Button variant='contained' onClick = {() => {props.setMonthView(!props.monthView)}}>Month View</Button>
-            <Button variant='contained' onClick = {() => {setOpen(true)}}>Book a session</Button>
+            <span>
+                <Button variant='contained' onClick = {() => {props.setMonthView(!props.monthView)}}>Month View</Button>
+                <ButtonSwitch tutor={selectedTutor} setTutor={setSelectedTutor} tutoree={props.tutoree} sessions={props.sessions} setOpen={setOpen} setMonthView={props.setMonthView} tutorSession={tutorSessions} setTutorSessions={setTutorSessions} setTutoreeSessions={props.setSessions}/>
+            </span>
             <Popup open={open} onClose={handleClose} setSelectedTutor={setSelectedTutor} allTutors={props.allTutors} setSelectedTutor={setSelectedTutor} />
         </div>
 }

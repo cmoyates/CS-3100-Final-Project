@@ -33,15 +33,7 @@ const SignupSwitch = (props) => {
     const error = [compsci, english, french, history, math].filter((v) => v).length < 1;
 
     const createId = (email) => {
-        let id = "";
-        for(let i=0; i<email.length; i++) {
-            id = id.concat(email.charCodeAt(i).toString());
-        }
-        if(id.length > 20) {
-            id = id.slice(0, 19);
-        }
-        parseInt(id);
-        return id;
+        return Math.floor(Math.random() * 99000000) + 1000000;  
     }
 
     let idFromEmail = createId(props.email);

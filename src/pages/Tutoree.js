@@ -9,6 +9,8 @@ import {Grid} from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import {useState} from 'react';
 import TutoreeCalendarSwitch from '../components/TutoreeCalendarSwitch'
+import Session from '../Session';
+import Availability from '../Availability';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,6 +40,8 @@ const Tutoree = (props) => {
         props.setIsAuth(false);
         props.setAccountType(-1);
         props.setEmail("");
+        Availability.setAvailabilities([]);
+        Session.setSessions([]);
         props.history.push("/");
     } 
 
@@ -71,7 +75,7 @@ const Tutoree = (props) => {
             <p>{props.tutoree.gradeLevel}</p>
             </Grid>
             <Grid item xs={8} style={{backgroundColor: "white"}}>
-                <TutoreeCalendarSwitch monthView={monthView} setMonthView={setMonthView} sessions={props.sessions} tutoree={props.tutoree} allTutors={props.allTutors}/>
+                <TutoreeCalendarSwitch monthView={monthView} setMonthView={setMonthView} sessions={props.sessions} setSessions={props.setSessions} tutoree={props.tutoree} allTutors={props.allTutors}/>
             </Grid>
         </Grid>
         </div>

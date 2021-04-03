@@ -8,7 +8,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import {Grid} from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
 import {useState} from 'react';
-import TutoreeCalendarSwitch from '../components/TutoreeCalendarSwitch';
+import AdminCalendarSwitch from '../components/AdminCalendarSwitch';
+import Session from '../Session';
+import Availability from '../Availability';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,6 +40,8 @@ const Admin = (props) => {
         props.setIsAuth(false);
         props.setAccountType(-1);
         props.setEmail("");
+        Availability.setAvailabilities([]);
+        Session.setSessions([]);
         props.history.push("/");
     } 
 
@@ -45,7 +49,7 @@ const Admin = (props) => {
 
     return (
         <div className={classes.root}>
-        <AppBar position="static" style={{height: "7vh", background:'#6479E9', display: "flex"}}>
+        <AppBar position="static" style={{height: "7vh", background:'#5EBF68', display: "flex"}}>
         <Toolbar style={{height: "7vh"}}>
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
@@ -67,7 +71,7 @@ const Admin = (props) => {
             <img src={props.profileImg} alt=""/>
             </Grid>
             <Grid item xs={8} style={{backgroundColor: "white"}}>
-                <TutoreeCalendarSwitch monthView={monthView} setMonthView={setMonthView} sessions={props.sessions} tutoree={props.tutoree}/>
+                <AdminCalendarSwitch monthView={monthView} setMonthView={setMonthView} allTutors={props.allTutors} allTutorees={props.allTutorees} />
             </Grid>
         </Grid>
         </div>

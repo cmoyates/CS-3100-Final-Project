@@ -28,6 +28,7 @@ function App() {
   const [tutoree, setTutoree] = useState([]);
   const [admin, setAdmin] = useState([]);
   const [allTutors, setAllTutors] = useState([]);
+  const [allTutorees, setAllTutorees] = useState([]);
 
   useEffect(() => {
     const getAccount = async () => {
@@ -65,6 +66,10 @@ function App() {
         try {
           const adminFromServer = await fetchAdmin();
           setAdmin(adminFromServer);
+          const allTutorsFromServer = await fetchTutorsByFeedback();
+          setAllTutors(allTutorsFromServer);
+          const allTutoreesFromServer = await fetchAllTutorees();
+          setAllTutorees(allTutoreesFromServer);
           console.log(adminFromServer);
           setAccountType(3);
           return;
@@ -142,13 +147,24 @@ function App() {
     return data;
   }
 
+  const fetchAllTutorees = async () => {
+    const res = await fetch('/tutorees/', {
+      headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+    });
+    const data = await res.json();
+    return data;
+  }
+
   return (
     <Router>
       <div className="App" style={{height: "100%"}}>
         <Switch>
           <ProtectedRoute path="/tutor" isAuth={isAuth} component={(props) => <Tutor {...props} name={name} profileImg={profileImg} buttonPopup={buttonPopup} email={email} setButtonPopup={setButtonPopup} tutor={tutor} subjects={subjects} sessions={sessions} availabilities={availabilities} setAvailabilities={setAvailabilities} setIsAuth={setIsAuth} setAccountType={setAccountType} setEmail={setEmail}/>}/>
-          <ProtectedRoute path="/tutoree" isAuth={isAuth} component={(props) => <Tutoree {...props} tutoree={tutoree} profileImg={profileImg} sessions={sessions} allTutors={allTutors} setAllTutors={setAllTutors} setIsAuth={setIsAuth} setAccountType={setAccountType} setEmail={setEmail}/>}/>
-          <ProtectedRoute path="/admin" isAuth={isAuth} component={(props) => <Admin {...props} admin={admin} profileImg={profileImg} setIsAuth={setIsAuth} setAccountType={setAccountType} setEmail={setEmail}/>}/>
+          <ProtectedRoute path="/tutoree" isAuth={isAuth} component={(props) => <Tutoree {...props} tutoree={tutoree} profileImg={profileImg} sessions={sessions} setSessions={setSessions} allTutors={allTutors} setAllTutors={setAllTutors} setIsAuth={setIsAuth} setAccountType={setAccountType} setEmail={setEmail}/>}/>
+          <ProtectedRoute path="/admin" isAuth={isAuth} component={(props) => <Admin {...props} admin={admin} profileImg={profileImg} allTutors={allTutors} allTutorees={allTutorees} setIsAuth={setIsAuth} setAccountType={setAccountType} setEmail={setEmail}/>}/>
           <ProtectedRoute path="/signup" isAuth={isAuth} component={(props) => <SignUp {...props} email={email} setEmail={setEmail} setIsAuth={setIsAuth} setAccountType={setAccountType}/>}/>
           <Route path="/about" component={MockData}/>
           <Route exact path="/" component={(props) => <Home {...props} setName={setName} setProfileImg={setProfileImg} setEmail={setEmail} accountType={accountType} isAuth={isAuth}/>}/>
